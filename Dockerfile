@@ -1,4 +1,4 @@
-FROM alpine
+FROM lsiobase/alpine.armhf
 LABEL maintainer="Herald Yu <yuhr123@gmail.com>"
 
 RUN apk add --update curl jq \
@@ -13,14 +13,14 @@ RUN set -x \
     && mkdir /frp \
     && cd /frp \
     && release=${release:-$(curl -s https://api.github.com/repos/fatedier/frp/releases/latest | jq -r .tag_name )} \
-    && curl -s -L https://github.com/fatedier/frp/releases/download/${release}/frp_${release/v/}_linux_amd64.tar.gz \
+    && curl -s -L https://github.com/fatedier/frp/releases/download/${release}/frp_${release/v/}_linux_arm.tar.gz \
     | tar -zx \
-    && cd frp_${release/v/}_linux_amd64 \
+    && cd frp_${release/v/}_linux_arm \
     && cp frpc /usr/local/bin/ \
     && chmod +x /usr/local/bin/frpc \
     && mkdir /etc/frp \
     && cd .. \
-    && rm -rf frp_${release/v/}_linux_amd64
+    && rm -rf frp_${release/v/}_linux_arm
 
 COPY ./frpc.ini /etc/frp
 
