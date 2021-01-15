@@ -24,6 +24,6 @@ RUN set -x \
 
 COPY ./frpc.ini /etc/frp
 
-EXPOSE 6000 7000
+# EXPOSE 6000 7000
 
 CMD ["frpc", "-c", "/etc/frp/frpc.ini"]
