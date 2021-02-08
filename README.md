@@ -5,13 +5,30 @@
 
 ### Quick Start
 
+在当前目录创建 `frpc` 文件夹和 `frpc/frpc.ini` 配置文件，填上以下内容以及其他你需要的 frpc 配置：
+
+```
+[common]
+server_addr = {{ .Envs.FRP_SERVER }}
+server_port = {{ .Envs.FRP_PORT }}
+token = {{ .Envs.FRP_TOKEN }}
+
+# 以下配置根据实际需要填写
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 22
+remote_port = 6556
+```
+
+请将命令中 `<>` 部分替换成实际的内容，实际的内容不要带这个尖角括号。
+
 ```shell
-$ sudo docker run -d --name fprc \
+$ sudo docker run -d --name frpc \
 -e FRP_SERVER=<1.2.3.4> \
 -e FRP_PORT=<7000> \
 -e FRP_TOKEN=<abcdefg> \
--p <7000>:<7000> \
--p <$HOME/frp>:/etc/frp \
+-v $PWD/frpc:/etc/frp \
 --network=host \
 --restart=unless-stopped \
 getnas/frpc
